@@ -36,8 +36,8 @@
                 android:text="Còn trống"
                 android:textStyle="bold"
                 android:padding="6dp"
-                android:textColor="#FFFFFF"
-                android:background="#4CAF50"/> </LinearLayout>
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvPrice"

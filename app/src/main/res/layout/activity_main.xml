@@ -16,11 +16,23 @@
         android:textColor="#FFFFFF"
         android:background="#3F51B5"/>
 
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvHeader"
+        android:hint="🔍 Tìm kiếm tên hoặc mã phòng..."
+        android:background="#FFFFFF"
+        android:padding="12dp"
+        android:layout_margin="10dp"
+        android:elevation="2dp"
+        android:singleLine="true"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRooms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tvHeader"
+        android:layout_below="@id/etSearch"
         android:padding="8dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
