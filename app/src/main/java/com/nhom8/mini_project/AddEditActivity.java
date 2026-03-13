@@ -21,8 +21,8 @@ public class AddEditActivity extends AppCompatActivity {
     private LinearLayout layoutTenant;
     private Button btnSave, btnCancel;
 
-    private int actionType = 1; // 1: Thêm mới (mặc định), 2: Cập nhật
-    private int position = -1; // Vị trí đang sửa
+    private int actionType = 1;
+    private int position = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,36 +31,32 @@ public class AddEditActivity extends AppCompatActivity {
 
         initViews();
 
-        // Xử lý sự kiện bật/tắt công tắc tình trạng phòng
         switchStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     switchStatus.setText("Tình trạng: ĐÃ THUÊ");
-                    layoutTenant.setVisibility(View.VISIBLE); // Hiện chỗ nhập tên
+                    layoutTenant.setVisibility(View.VISIBLE);
                 } else {
                     switchStatus.setText("Tình trạng: CÒN TRỐNG");
-                    layoutTenant.setVisibility(View.GONE); // Ẩn chỗ nhập tên
-                    etTenantName.setText(""); // Xóa trắng dữ liệu
+                    layoutTenant.setVisibility(View.GONE);
+                    etTenantName.setText("");
                     etPhone.setText("");
                 }
             }
         });
 
-        // NHẬN DỮ LIỆU TỪ MAIN_ACTIVITY TRUYỀN SANG (KIỂM TRA THÊM HAY SỬA)
         Intent intent = getIntent();
         actionType = intent.getIntExtra("ACTION_TYPE", 1);
 
         if (actionType == 2) {
-            // LÀ TRẠNG THÁI SỬA
             tvFormTitle.setText("CẬP NHẬT PHÒNG TRỌ");
             Room roomEdit = (Room) intent.getSerializableExtra("ROOM_DATA");
             position = intent.getIntExtra("POSITION", -1);
 
             if (roomEdit != null) {
-                // Đổ dữ liệu cũ lên form
                 etRoomId.setText(roomEdit.getId());
-                etRoomId.setEnabled(false); // Thường mã phòng không cho sửa
+                etRoomId.setEnabled(false);
                 etRoomName.setText(roomEdit.getName());
                 etPrice.setText(String.valueOf(roomEdit.getPrice()));
 
