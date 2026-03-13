@@ -15,15 +15,20 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     private List<Room> roomList;
     private OnRoomClickListener listener;
 
-    // Interface để giao tiếp với MainActivity
     public interface OnRoomClickListener {
-        void onRoomClick(Room room, int position); // Dùng cho chức năng UPDATE
-        void onRoomLongClick(Room room, int position); // Dùng cho chức năng DELETE
+        void onRoomClick(Room room, int position);
+        void onRoomLongClick(Room room, int position);
     }
 
     public RoomAdapter(List<Room> roomList, OnRoomClickListener listener) {
         this.roomList = roomList;
         this.listener = listener;
+    }
+
+    // HÀM TÌM KIẾM (Cho tính năng Nâng cao)
+    public void filterList(List<Room> filteredList) {
+        this.roomList = filteredList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -41,23 +46,21 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         holder.tvRoomName.setText(room.getId() + " - " + room.getName());
         holder.tvPrice.setText("Giá: " + room.getPrice() + " VNĐ");
 
-        // XỬ LÝ LOGIC MÀU SẮC VÀ ẨN HIỆN THEO ĐỀ BÀI
+        // XỬ LÝ MÀU SẮC THEO ĐỀ BÀI
         if (room.isAvailable()) {
             holder.tvStatus.setText("CÒN TRỐNG");
             holder.tvStatus.setBackgroundColor(Color.parseColor("#4CAF50")); // Màu Xanh lá
-            holder.layoutTenantInfo.setVisibility(View.GONE); // Ẩn thông tin người thuê
+            holder.layoutTenantInfo.setVisibility(View.GONE);
         } else {
             holder.tvStatus.setText("ĐÃ THUÊ");
             holder.tvStatus.setBackgroundColor(Color.parseColor("#F44336")); // Màu Đỏ
-            holder.layoutTenantInfo.setVisibility(View.VISIBLE); // Hiện thông tin người thuê
+            holder.layoutTenantInfo.setVisibility(View.VISIBLE);
             holder.tvTenantName.setText("Người thuê: " + room.getTenantName());
             holder.tvPhone.setText("SĐT: " + room.getPhone());
         }
 
-        // Bắt sự kiện Click (Dành cho bạn B làm Update)
+        // Sự kiện gửi ra MainActivity
         holder.itemView.setOnClickListener(v -> listener.onRoomClick(room, position));
-
-        // Bắt sự kiện Long Click (Dành cho bạn A làm Delete)
         holder.itemView.setOnLongClickListener(v -> {
             listener.onRoomLongClick(room, position);
             return true;
